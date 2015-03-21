@@ -1,0 +1,6 @@
+.idea
+*.zip
+*.iml
+*.log
+
+private.properties
