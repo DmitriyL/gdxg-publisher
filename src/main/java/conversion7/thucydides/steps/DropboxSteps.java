@@ -59,7 +59,8 @@ public class DropboxSteps extends ScenarioSteps {
             if (releaseData.getGameVersion().equals(prevReleaseData.getGameVersion())) {
                 Fail.fail("Release already exist: " + releaseData.getGameVersion());
             }
-            if (releaseData.getLibVersion() == null && prevReleaseData.getLibVersion() == null) {
+            String curReleaseLibVersion = releaseData.getLibVersion();
+            if (curReleaseLibVersion == null && prevReleaseData.getLibVersion() == null) {
                 Fail.fail("No lib provided in previous and new releases!");
             }
 
@@ -70,13 +71,15 @@ public class DropboxSteps extends ScenarioSteps {
             }
             DropboxServiceFacade.uploadFile(Constants.DROPBOX_ROOT_FOLDER, releaseData.getGameFileName());
 
-            if (!releaseData.getLibVersion().isEmpty()) {
-                String prevReleaseDataLibVersion = prevReleaseData.getLibVersion();
-                if (prevReleaseDataLibVersion != null) {
-                    // delete old lib if new lib will be added
-                    DropboxServiceFacade.deleteFile(Constants.DROPBOX_ROOT_FOLDER, prevReleaseData.getLibFileName());
+            if (curReleaseLibVersion != null && !curReleaseLibVersion.isEmpty()) {
+                String prevReleaseLibVersion = prevReleaseData.getLibVersion();
+                if (!curReleaseLibVersion.equals(prevReleaseLibVersion)) {
+                    if (prevReleaseLibVersion != null) {
+                        // delete old lib if new lib will be added
+                        DropboxServiceFacade.deleteFile(Constants.DROPBOX_ROOT_FOLDER, prevReleaseData.getLibFileName());
+                    }
+                    DropboxServiceFacade.uploadFile(Constants.DROPBOX_ROOT_FOLDER, releaseData.getLibFileName());
                 }
-                DropboxServiceFacade.uploadFile(Constants.DROPBOX_ROOT_FOLDER, releaseData.getLibFileName());
             }
 
             String shareableUrl = DropboxServiceFacade.createShareableUrl(Constants.DROPBOX_ROOT_FOLDER);

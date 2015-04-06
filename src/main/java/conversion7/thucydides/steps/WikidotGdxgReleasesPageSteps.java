@@ -13,6 +13,7 @@ public class WikidotGdxgReleasesPageSteps extends ScenarioSteps {
     @Step
     public void add_release_description_on_page(ReleaseData releaseData) {
         wikidotGdxgReleasesPage.open();
+        // TODO force remove Page lock conflict and edit original version
         wikidotGdxgReleasesPage.clickEditButton();
 
         ReleasePageSources releasePageSources = new ReleasePageSources(wikidotGdxgReleasesPage.getEditPageContentAreaText());

@@ -40,11 +40,11 @@ public class ReleaseData {
         for (DbxEntry child : folderFiles.children) {
             if (child.name.contains(GAME_ARCHIVE_PREFIX)) {
                 Assertions.assertThat(gameVersion).isNull();
-                gameVersion = child.name.replaceAll(ARCHIVE_EXT, "");
+                gameVersion = child.name.replaceAll(GAME_ARCHIVE_PREFIX, "").replaceAll(ARCHIVE_EXT, "");
             }
             if (child.name.contains(LIB_ARCHIVE_PREFIX)) {
                 Assertions.assertThat(libVersion).isNull();
-                libVersion = child.name.replaceAll(ARCHIVE_EXT, "");
+                libVersion = child.name.replaceAll(LIB_ARCHIVE_PREFIX, "").replaceAll(ARCHIVE_EXT, "");
             }
         }
     }

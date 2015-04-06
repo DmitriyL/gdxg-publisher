@@ -14,6 +14,7 @@ public class StoryRunner extends ThucydidesJUnitStories {
         PropertiesLoader.init();
 
         System.setProperty("webdriver.driver", "chrome");
+        System.setProperty("story.timeout.in.secs", "1500");
         System.setProperty("webdriver.chrome.driver", Constants.APP_ROOT + "\\drivers\\chromedriver.exe");
     }
 
